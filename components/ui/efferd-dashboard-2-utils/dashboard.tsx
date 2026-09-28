@@ -2,6 +2,7 @@ import { BillingHealth } from "./billing-health";
 import { ChannelSalesChart } from "./channel-sales-chart";
 import { DashboardActivity } from "./activity";
 import { DashboardInvoices } from "./dashboard-invoices";
+import { DashboardMeetings } from "./dashboard-meetings";
 import { NetRevenueChart } from "./net-revenue-chart";
 import { DashboardStats } from "./stats";
 
@@ -11,6 +12,7 @@ export function Dashboard() {
       <DashboardStats />
       <NetRevenueChart />
       <ChannelSalesChart />
+      <DashboardMeetings />
       <DashboardInvoices />
       <BillingHealth />
       <DashboardActivity />
