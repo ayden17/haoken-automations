@@ -1,6 +1,38 @@
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: haoken
+      POSTGRES_PASSWORD: haoken
+      POSTGRES_DB: haoken
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U haoken -d haoken"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  migrate:
+    image: postgres:16-alpine
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: haoken
+      PGPASSWORD: haoken
+      PGDATABASE: haoken
+    volumes:
+      - ./scripts/migrate.sql:/migrate.sql
+    command: psql -f /migrate.sql
+    restart: "no"
+
   web:
-    image: node:22-slim
+    build:
+      context: .
+      dockerfile: Dockerfile.web
     working_dir: /app
     command: sh -c "npm install && npx next dev -H 0.0.0.0 -p 3000"
     volumes:
@@ -13,6 +45,13 @@ services:
     environment:
       - BASE44_PUBLIC_HOST_SUFFIX=${BASE44_PUBLIC_HOST_SUFFIX}
       - WATCHPACK_POLLING=true
+      - DATABASE_URL=postgresql://haoken:haoken@db:5432/haoken
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     restart: on-failure
     healthcheck:
       test:
@@ -23,4 +62,7 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-      start_period: 60s
+      start_period: 90s
+
+volumes:
+  pgdata:

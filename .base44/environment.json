@@ -5,7 +5,7 @@
   "secrets": [
     {
       "name": "GEMINI_API_KEY",
-      "description": "Google Gemini API key from https://aistudio.google.com/apikey — powers the AI automation, chat, and image generation routes. Not required to boot the dashboard.",
+      "description": "Google Gemini API key from https://aistudio.google.com/apikey — powers the AI automation, chat, image generation, and client brief routes.",
       "requiredAtBoot": false,
       "generatedForDevelopment": true
     }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {
   ChevronDown,
   LayoutDashboard,
+  MapPin,
   Megaphone,
   Menu,
   Moon,
@@ -54,6 +55,7 @@ const groups = [
     items: [
       { href: "/pemasaran", label: "Pemasaran", icon: Megaphone },
       { href: "/prospek", label: "Prospek", icon: Target },
+      { href: "/lead-finder", label: "Lead Finder", icon: MapPin },
       { href: "/automasi", label: "Automasi", icon: Workflow },
     ],
   },
@@ -65,6 +67,7 @@ const titles: Record<string, string> = {
   "/invoice": "Invoice",
   "/pemasaran": "Pemasaran",
   "/prospek": "Prospek",
+  "/lead-finder": "Lead Finder",
   "/automasi": "Automasi",
 };
 
